@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Jabil</string>
+    <string name="saved_runs">Saved Runs</string>
+    <string name="see_graph">See Graph</string>
+    <string name="settings">Settings</string>
+    <string name="startRun">Start Run</string>
+    <string name="cancelButton">Cancel</string>
+    <string name="saveRun">Save Run</string>
+
+    <color name="colorAsh">#424242</color>
+    <color name="colorNavBar">#323232</color>
+    <color name="colorFragment">#222222</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+    <string name="minTemp">Minimum Temp</string>
+    <string name="maxTemp">Maximum Temp</string>
+    <string name="runLength">Run Length</string>
+    <string name="runName">Run Name</string>
+    <string name="runDate">Run Date</string>
+    <string name="currentTemp">Temp:</string>
+    <string name="minTempText">Min Temp:</string>
+    <string name="maxTempNum">Max Temp:</string>
+</resources>

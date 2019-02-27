@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorAsh">
+
+    <item
+        android:id="@+id/navigator_new_run"
+        android:icon="@drawable/ic_add"
+        android:title="@string/startRun" />
+
+    <item
+        android:id="@+id/navigator_saved_runs"
+        android:icon="@drawable/ic_group"
+        android:title="@string/saved_runs" />
+
+    <item
+        android:id="@+id/navigator_graphed_run"
+        android:icon="@drawable/ic_timeline"
+        android:title="@string/see_graph" />
+
+    <item
+        android:id="@+id/navigator_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings" />
+
+</menu>
