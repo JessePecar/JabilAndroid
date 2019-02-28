@@ -20,4 +20,5 @@
     <string name="currentTemp">Temp:</string>
     <string name="minTempText">Min Temp:</string>
     <string name="maxTempNum">Max Temp:</string>
+    <string name="currentRun">Current Run</string>
 </resources>

@@ -3,9 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context=".NewRunActivity"
+    android:layout_height="match_parent"
     android:background="@color/colorAsh">
 
     <android.support.constraint.Guideline
@@ -60,39 +59,6 @@
         app:layout_constraintGuide_percent="0.6">
 
     </android.support.constraint.Guideline>
-
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
-        android:layout_marginBottom="16dp"
-        android:background="@color/colorFragment"
-        android:text="@string/saveRun"
-        android:textColor="@color/colorAccent"
-
-        app:layout_constraintDimensionRatio="H,3:1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/middleGuideline2"
-        app:layout_constraintRight_toLeftOf="@id/endGuideline"
-        />
-
-    <Button
-        android:id="@+id/cancelButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
-        android:layout_marginBottom="16dp"
-        android:background="@color/colorFragment"
-        android:text="@string/cancelButton"
-        android:textColor="@color/colorAccent"
-
-        app:layout_constraintDimensionRatio="H,3:1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/leftGuideline"
-        app:layout_constraintRight_toLeftOf="@id/middleGuideline"
-
-        />
 
     <EditText
         android:id="@+id/runNameSave"

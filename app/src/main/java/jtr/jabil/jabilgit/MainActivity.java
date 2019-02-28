@@ -29,19 +29,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         RunDatabase rd = new RunDatabase(this);
         //rd.onUpgrade(rd.getWritableDatabase(), 0, 1);
         System.out.println(vC.myInstance().timer);
-        configSavedRuns();
-        configGraphRuns();
-        configSettings();
 
-    }
-    public void configSavedRuns(){
-        Button savedRuns;
-    }
-    public void configGraphRuns(){
-        Button graphRuns;
-    }
-    public void configSettings(){
-        Button settings;
+
     }
 
     public boolean loadFragment(Fragment fragment){

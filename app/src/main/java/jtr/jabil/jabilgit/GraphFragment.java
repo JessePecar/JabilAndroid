@@ -119,6 +119,7 @@ public class GraphFragment extends Fragment {
         series.setDataPointsRadius(14);
         series.setThickness(10);
         series.setBackgroundColor(getResources().getColor(R.color.colorFragment));
+
         graph.getGridLabelRenderer().setGridColor(getResources().getColor(R.color.colorWhite));
         graph.getGridLabelRenderer().setHorizontalAxisTitle("Minutes");
         graph.getGridLabelRenderer().setHorizontalAxisTitleColor(getResources().getColor(R.color.colorAccent2));
@@ -126,6 +127,16 @@ public class GraphFragment extends Fragment {
         graph.getGridLabelRenderer().setVerticalAxisTitle("Temperature");
         graph.getGridLabelRenderer().setVerticalAxisTitleColor(getResources().getColor(R.color.colorAccent2));
         graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(48);
+
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(10);
+
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(32);
+        graph.getViewport().setMaxY(120);
+
         series.setAnimated(true);
 
         graph.getGridLabelRenderer().setHorizontalLabelsColor(getResources().getColor(R.color.colorWhite));

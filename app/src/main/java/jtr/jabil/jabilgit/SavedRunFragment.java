@@ -75,8 +75,6 @@ public class SavedRunFragment extends Fragment{
         return view;
     }
 
-    //If the runs are to be clickable I will need to configure them as buttons and make new
-    //activities
 
 
 }
