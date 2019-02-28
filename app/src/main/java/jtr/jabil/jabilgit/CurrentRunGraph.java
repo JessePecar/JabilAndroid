@@ -2,6 +2,7 @@ package jtr.jabil.jabilgit;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -21,9 +22,11 @@ import java.util.TimerTask;
 
 public class CurrentRunGraph extends Fragment {
 
+    private final Handler handle = new Handler();
     RecyclerView recyclerView;
     RunDatabase rd = new RunDatabase(getActivity());
     View fragmentView;
+    Runnable graphTimer;
     VariableController vC = new VariableController();
     RunVariables rV = new RunVariables();
     LineGraphSeries<DataPoint> series;
@@ -45,7 +48,7 @@ public class CurrentRunGraph extends Fragment {
         graph = fragmentView.findViewById(R.id.running_graph);
         setupGraph();
 
-        setTimer();
+        //setTimer();
 
         return fragmentView;
     }
@@ -61,10 +64,28 @@ public class CurrentRunGraph extends Fragment {
         Timer time  = new Timer();
         time.schedule(timer, delay);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        graphTimer = new Runnable() {
+            @Override
+            public void run() {
+                //series.appendData(new DataPoint(rV.myInstance().runDP.size() - 1, rV.myInstance().currentTemp), true, 150);
+                series.resetData(dataSetup());
+
+                handle.postDelayed(this, vC.myInstance().timer * 10);
+
+            }
+        };
+        handle.postDelayed(graphTimer, vC.myInstance().timer * 100);
+    }
+
     DataPoint[] dataSetup(){
         DataPoint[] newData = new DataPoint[rV.myInstance().runDP.size()];
         for(int i = 0; i < rV.myInstance().runDP.size(); i++){
             newData[i] = rV.myInstance().runDP.get(i);
+
         }
         return newData;
     }

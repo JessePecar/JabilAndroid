@@ -42,7 +42,7 @@ public class CurrentRunFragment extends Fragment{
         maxTemp = view.findViewById(R.id.maxTempNum);
         minTemp = view.findViewById(R.id.minTempNum);
         currentTemp = view.findViewById(R.id.currentTempNum);
-
+        nameTimer();
         configTimer();
         configTemps();
         configBar(0);
@@ -50,10 +50,24 @@ public class CurrentRunFragment extends Fragment{
 
         return view;
     }
+
+    void nameTimer(){
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                rV.myInstance().runName = runName.getText().toString();
+                nameTimer();
+            }
+        };
+        long delay = 50;
+        Timer timer = new Timer();
+        timer.schedule(task, delay);
+    }
     void configTimer(){
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+
                 configTimer();
                 configTemps();
                 configBar(0);
@@ -77,7 +91,6 @@ public class CurrentRunFragment extends Fragment{
                 if(i < 10){
                     int d = rV.myInstance().dist / 10;
                     lineDial.setProgress(lineDial.getProgress() + d);
-                    rV.myInstance().runName = runName.getText().toString();
                     configBar(i + 1);
                 }
             }
