@@ -1,9 +1,11 @@
 package jtr.jabil.jabilgit;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -11,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,8 +29,9 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
     private Context ctx;
     private List<RunCard> runList;
 
+    
     VariableController vC = new VariableController();
-    final MainActivity mA = new MainActivity();
+
     RunCardViewHolder rcvh;
     public String runData, runDataName;
     public int runID;
@@ -41,13 +45,15 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
     public RunCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.run_card_view, null);
+        vC.displayedName = "";
+        vC.displayedRun = "";
         return new RunCardViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final RunCardViewHolder holder, final int position){
 
-        RunCard runs = runList.get(position);
+        final RunCard runs = runList.get(position);
         holder.runName.setText(String.valueOf(runs.getName()));
         holder.runLength.setText("Length: " + String.valueOf(runs.getRunLength()));
         holder.runDate.setText(String.valueOf(runs.getDate()));
@@ -79,15 +85,15 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
             }
 
         });
-
+        /*
         if(runID == vC.myInstance().runID){
             //Change the color to white ===>>>
             holder.itemView.setBackgroundColor(Color.GRAY);
         }
         else{
-            holder.itemView.setBackgroundColor(Color.parseColor("#424242"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#00424242"));
         }
-
+        */
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,13 +105,13 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
                     vC.myInstance().displayedName = "";
                     vC.myInstance().displayedRun = "";
                     vC.myInstance().runID = -1;
-                    holder.itemView.setBackgroundColor(Color.parseColor("#424242"));
+                    holder.itemView.setBackgroundColor(Color.parseColor("#00424242"));
 
 
                 }
                 else{
                     if(rcvh != null){
-                        rcvh.itemView.setBackgroundColor(Color.parseColor("#424242"));
+                        rcvh.itemView.setBackgroundColor(Color.parseColor("#00424242"));
                     }
                     //Change the color, save the last value as rcvh, and change old rcvh to normal color...
                     holder.itemView.setBackgroundColor(Color.GRAY);
@@ -115,11 +121,30 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
                     vC.myInstance().min = runList.get(position).getMinTemp();
                     vC.myInstance().max = runList.get(position).getMaxTemp();
                     vC.myInstance().runID = runList.get(position).getRunID();
+                    try{changeScene();}
+                    catch(Exception e){
+
+                    }
                 }
                 System.out.println("\n+\n++\n+++ Saved The Data: " + vC.myInstance().displayedName + " \n+\n++\n+++");
 
             }
         });
+    }
+
+    public void changeScene(){
+        if(ctx == null){
+            return;
+        }
+        if(ctx instanceof MainActivity){
+            MainActivity mA = (MainActivity) ctx;
+            mA.loadFragment(new GraphFragment(), 1);
+        }
+    }
+    public boolean loadFragment(Fragment fragment){
+
+
+        return true;//mainActivity.loadFragment(fragment);
     }
 
     @Override

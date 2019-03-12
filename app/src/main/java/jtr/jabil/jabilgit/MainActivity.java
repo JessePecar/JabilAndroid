@@ -15,6 +15,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     public Context ctx;
     private VariableController vC = new VariableController();
+    BottomNavigationView navigator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +24,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportActionBar().setTitle("Jabil");
 
         ctx = this;
-        BottomNavigationView navigator = findViewById(R.id.navigation);
+        navigator = findViewById(R.id.navigation);
         navigator.setOnNavigationItemSelectedListener(this);
-        loadFragment(new NewRunFragment());
+        loadFragment(new NewRunFragment(), 0);
 
         RunDatabase rd = new RunDatabase(this);
         //rd.onUpgrade(rd.getWritableDatabase(), 0, 1);
@@ -33,12 +35,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    public boolean loadFragment(Fragment fragment){
+    public boolean loadFragment(Fragment fragment, int test){
         if(fragment != null){
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
+            if(test == 1){
+                navigator.setSelectedItemId(R.id.navigator_graphed_run);
+            }
+
             return true;
         }
         return false;
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new SettingsFragment();
                 break;
         }
-        return loadFragment(fragment);
+        return loadFragment(fragment, 0);
     }
 
 }

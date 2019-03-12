@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAsh"
+    android:background="@color/noColor"
     android:padding="10dp"
     >
 
@@ -27,12 +27,12 @@
     <android.support.v7.widget.CardView
 
         android:id="@+id/cardView"
-        android:layout_width="375dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:clickable="true"
 
 
-        card_view:cardBackgroundColor="@color/colorFragment"
+        card_view:cardBackgroundColor="@color/noColor"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="5dp"
         card_view:contentPadding="5dp"
@@ -43,7 +43,8 @@
         android:id="@+id/constrain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true">
+        android:clickable="true"
+        android:background="@color/colorAsh">
 
         <android.support.constraint.Guideline
             android:id="@+id/centerGuide"

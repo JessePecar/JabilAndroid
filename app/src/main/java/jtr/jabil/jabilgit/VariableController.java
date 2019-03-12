@@ -8,6 +8,7 @@ public class VariableController  extends Application {
     int runID;
     int timer;
     int min, max;
+
     private static VariableController instance = null;
 
     protected VariableController(){}

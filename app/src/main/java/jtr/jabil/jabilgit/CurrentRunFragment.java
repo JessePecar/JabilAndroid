@@ -1,5 +1,6 @@
 package jtr.jabil.jabilgit;
 
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,12 +20,16 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import android.nfc.tech.*;
 
 public class CurrentRunFragment extends Fragment{
 
     EditText runName;
     TextView maxTemp, minTemp, currentTemp;
     SeekBar lineDial;
+
+    /* NFC variable */
+
 
     ArrayList runTemps = new ArrayList();
     ArrayList tempList = new ArrayList();
