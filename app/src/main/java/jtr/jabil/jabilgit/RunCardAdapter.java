@@ -29,7 +29,7 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
     private Context ctx;
     private List<RunCard> runList;
 
-    
+
     VariableController vC = new VariableController();
 
     RunCardViewHolder rcvh;

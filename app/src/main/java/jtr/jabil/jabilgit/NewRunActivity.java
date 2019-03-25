@@ -1,6 +1,17 @@
 package jtr.jabil.jabilgit;
 
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -20,6 +31,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,14 +42,21 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     VariableController vC = new VariableController();
     RunVariables rV = new RunVariables();
     boolean stopTimer = false;
+    private final Handler handle = new Handler();
     int counter = 0;
+    Activity thisAct;
+    //Near Field Variables
+    private NfcAdapter adapter;
+    private PendingIntent intent;
+    TextView testText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run);
         getSupportActionBar().setTitle("New Run");
-
+        thisAct = this;
         BottomNavigationView navigator = findViewById(R.id.navigation2);
         navigator.setOnNavigationItemSelectedListener(this);
 
@@ -49,10 +68,149 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         configureCancel();
 
         loadFragment(new CurrentRunFragment());
-        System.out.println("Running Timer");
-        configureTimer();
+
+        //configureTimer();
         System.out.println("Timer is running");
+
+
+        testText = findViewById(R.id.nfcTest);
+        adapter = NfcAdapter.getDefaultAdapter(this);
+
+        if(adapter == null){
+            Toast.makeText(this, "NFC is broke", Toast.LENGTH_LONG).show();
+            //This will send back to the mainActivity
+            finish();
+            return;
+        }
+
+        intent = PendingIntent.getActivity(
+                this,
+                1,
+                new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                0);
+
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        final int delay;
+
+        if(vC.myInstance().timer < 100){
+            delay = 100;
+        }
+        else{
+            delay = vC.myInstance().timer;
+        }
+        System.out.println("Running Timer");
+        Runnable timer = new Runnable() {
+
+            @Override
+            public void run() {
+                System.out.println("Running a new temperature");
+                generateRandomNum();
+
+                if(adapter != null){
+                    if(!adapter.isEnabled()){
+                        showWirelessSettings();
+                    }
+                    adapter.enableForegroundDispatch(thisAct, intent, null, null);
+                }
+
+                handle.postDelayed(this, delay);
+            }
+        };
+        handle.postDelayed(timer, delay * 10);
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        if(adapter != null){
+            if(adapter.isEnabled())
+                adapter.disableForegroundDispatch(thisAct);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        resolveIntent(intent);
+    }
+    private void resolveIntent(Intent i){
+        String action = i.getAction();
+
+        if(adapter.ACTION_TAG_DISCOVERED.equals(action)
+                || adapter.ACTION_TECH_DISCOVERED.equals(action)
+                || adapter.ACTION_NDEF_DISCOVERED.equals(action)){
+            Parcelable[] rawData = i.getParcelableArrayExtra(adapter.EXTRA_NDEF_MESSAGES);
+            NdefMessage[] msgs;
+
+            if(rawData != null){
+                msgs = new NdefMessage[rawData.length];
+                for(int j = 0; j < rawData.length; j++){
+                    msgs[j] = (NdefMessage) rawData[j];
+                }
+            }
+            else{
+                byte[] empty = new byte[0];
+                byte[] id = i.getByteArrayExtra(adapter.EXTRA_ID);
+                Tag tag = i.getParcelableExtra(adapter.EXTRA_TAG);
+                byte[] payload = dumpTagData(tag).getBytes();
+                NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN,empty, id, payload);
+                NdefMessage msg = new NdefMessage(new NdefRecord[]{record});
+                msgs = new NdefMessage[] {msg};
+
+            }
+            displayMessages(msgs);
+        }
+    }private void displayMessages(NdefMessage[] msgs){
+        if(msgs == null || msgs.length ==0){
+            return;
+        }
+        StringBuilder builder = new StringBuilder();
+        List<ParseNdefRecord> records = NdefMessageParser.parse(msgs[0]);
+        final int size = records.size();
+        for(int i = 0; i < size; i++){
+            ParseNdefRecord record = records.get(i);
+            String str = record.str();
+            builder.append(str).append("\n");
+        }
+
+        testText.setText(builder.toString());
+    }
+
+    private void showWirelessSettings(){
+        //If the wireless settings for the NFC are not enabled, it will go to settings!!!
+        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+        startActivity(intent);
+    }
+    private String dumpTagData(Tag tag){
+        StringBuilder sb = new StringBuilder();
+        byte[] id = tag.getId();
+
+        sb.append("ID (hex): " ).append(id.toString());
+
+        String prefix = "android.nfc.tech";
+        sb.append("Technologies: ");
+        for(String tech : tag.getTechList()){
+            sb.append(tech.substring(prefix.length()));
+            sb.append(", ");
+        }
+
+        sb.delete(sb.length() - 2 ,  sb.length());
+
+        for(String tech : tag.getTechList()){
+            if(tech.equals(MifareClassic.class.getName())){
+                String type = "Unknown";
+                try{
+
+                }catch(Exception e){
+
+                }
+            }
+        }
+        return sb.toString();
+    }
+    /*
     private void configureTimer(){
         TimerTask task = new TimerTask() {
             @Override
@@ -73,7 +231,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         }
         Timer timer = new Timer();
         timer.schedule(task, delay);
-    }
+    }*/
 
     private void generateRandomNum(){
         Random rand = new Random();
@@ -89,6 +247,15 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         if(tempList.size() == 10){
             System.out.println(tempList.size());
             enterValue();
+        }
+
+        if(adapter != null){
+            if(adapter.isEnabled()){
+
+            }
+            else {
+                adapter.enableForegroundDispatch(this, intent, null, null);
+            }
         }
 
     }
@@ -138,7 +305,8 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
                 fullDate = "dd/MM/yy";
                 DateFormat newFormat = new SimpleDateFormat(fullDate);
                 String formattedDate = newFormat.format(date);
-
+                if(adapter != null)
+                    adapter.disableForegroundDispatch(thisAct);
                 /*
                 * This is where I will pull from run variables, and take the saved data from the 2 tabs.
                 * */
@@ -177,10 +345,14 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     }
     private void configureCancel(){
         cancelButton = findViewById(R.id.cancelButton);
+
+        final Activity act = this;
         cancelButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 stopTimer = true;
+                if(adapter != null)
+                    adapter.disableForegroundDispatch(act);
                 finish();
             }
         });
@@ -211,5 +383,4 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         }
         return loadFragment(fragment);
     }
-
 }

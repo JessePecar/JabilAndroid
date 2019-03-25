@@ -62,17 +62,7 @@ public class GraphFragment extends Fragment {
 
 
     }
-    DataPoint createDataPoint(){
-        DataPoint dataPoint;
-        if(lineCounter < newData.length){
-            dataPoint = new DataPoint(lineCounter, newData[lineCounter]);
-            lineCounter++;
-            return dataPoint;
-        }
-        else{
-            return null;
-        }
-    }
+
     private DataPoint[] popData(){
         DataPoint[] newPopData = new DataPoint[newPoints.size()];
 

@@ -80,11 +80,12 @@ public class CurrentRunGraph extends Fragment {
         };
         handle.postDelayed(graphTimer, vC.myInstance().timer * 100);
     }
-
+    /* There is an error here */
     DataPoint[] dataSetup(){
         DataPoint[] newData = new DataPoint[rV.myInstance().runDP.size()];
         for(int i = 0; i < rV.myInstance().runDP.size(); i++){
-            newData[i] = rV.myInstance().runDP.get(i);
+            try{newData[i] = rV.myInstance().runDP.get(i);}
+            catch(Exception e){}
 
         }
         return newData;
