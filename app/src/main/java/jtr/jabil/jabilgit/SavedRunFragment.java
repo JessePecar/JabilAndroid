@@ -45,7 +45,7 @@ public class SavedRunFragment extends Fragment{
         Cursor runResult = db.getRunData();
         StringBuffer buffer = new StringBuffer();
         String runName, runDate, runData;
-        int runMaxTemp, runMinTemp, runLength, runID;
+        int runMaxTemp, runMinTemp, runLength, runID, runInterval;
             while(runResult.moveToNext()){
                 runID = runResult.getInt(0);
                 runName = runResult.getString(1);
@@ -54,6 +54,7 @@ public class SavedRunFragment extends Fragment{
                 runMaxTemp = runResult.getInt(4);
                 runMinTemp = runResult.getInt(5);
                 runData = runResult.getString(6);
+                runInterval = runResult.getInt(7);
 
                 cardList.add(new RunCard(
                         runID,
@@ -62,7 +63,8 @@ public class SavedRunFragment extends Fragment{
                         runDate,
                         runMaxTemp,
                         runMinTemp,
-                        runData
+                        runData,
+                        runInterval
                 ));
 
             }

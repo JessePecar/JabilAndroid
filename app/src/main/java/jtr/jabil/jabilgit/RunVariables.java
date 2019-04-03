@@ -2,6 +2,7 @@ package jtr.jabil.jabilgit;
 
 import android.app.Application;
 
+import com.github.mikephil.charting.data.Entry;
 import com.jjoe64.graphview.series.DataPoint;
 
 import java.util.ArrayList;
@@ -11,13 +12,14 @@ public class RunVariables  extends Application {
 
     ArrayList runTemps = new ArrayList();
     ArrayList tempList = new ArrayList();
-    List<DataPoint> runDP = new ArrayList<>();
+    List<Entry> runDP = new ArrayList<>();
 
     int maxNum;
     int minNum;
     int currentTemp;
     int dist;
     String runName;
+    boolean keepRunning;
     private static RunVariables instance = null;
 
     protected RunVariables(){}

@@ -6,7 +6,7 @@ public class VariableController  extends Application {
     String displayedRun;
     String displayedName;
     int runID;
-    int timer;
+    int timer, displayedTimer;
     int min, max;
 
     private static VariableController instance = null;

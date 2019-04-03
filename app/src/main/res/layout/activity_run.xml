@@ -129,5 +129,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="150dp"
         />
+    <TextView
+        android:id="@+id/interval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@id/cancelButton"
+        app:layout_constraintStart_toEndOf="@id/saveButton"/>
 
 </android.support.constraint.ConstraintLayout>

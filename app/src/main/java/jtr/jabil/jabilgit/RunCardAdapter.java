@@ -55,7 +55,7 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
 
         final RunCard runs = runList.get(position);
         holder.runName.setText(String.valueOf(runs.getName()));
-        holder.runLength.setText("Length: " + String.valueOf(runs.getRunLength()));
+        holder.runLength.setText("Length: " + String.valueOf(runs.getRunLength()) + " Seconds");
         holder.runDate.setText(String.valueOf(runs.getDate()));
         holder.maxTemp.setText(String.valueOf("Max Temp: " +runs.getMaxTemp()));
         holder.minTemp.setText(String.valueOf("Min Temp: " + runs.getMinTemp()));
@@ -104,6 +104,7 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
                     //Return the color to the original color...
                     vC.myInstance().displayedName = "";
                     vC.myInstance().displayedRun = "";
+                    vC.myInstance().displayedTimer = 0;
                     vC.myInstance().runID = -1;
                     holder.itemView.setBackgroundColor(Color.parseColor("#00424242"));
 
@@ -118,6 +119,7 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
                     rcvh = holder;
                     vC.myInstance().displayedName = runList.get(position).getName();
                     vC.myInstance().displayedRun = runList.get(position).getData();
+                    vC.myInstance().displayedTimer = runList.get(position).getRunTimer();
                     vC.myInstance().min = runList.get(position).getMinTemp();
                     vC.myInstance().max = runList.get(position).getMaxTemp();
                     vC.myInstance().runID = runList.get(position).getRunID();

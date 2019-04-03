@@ -25,6 +25,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.data.Entry;
 import com.jjoe64.graphview.series.DataPoint;
 
 import java.text.DateFormat;
@@ -43,12 +44,14 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     RunVariables rV = new RunVariables();
     boolean stopTimer = false;
     private final Handler handle = new Handler();
-    int counter = 0;
+    int counter = 0, INTer;
     Activity thisAct;
     //Near Field Variables
     private NfcAdapter adapter;
     private PendingIntent intent;
-    TextView testText;
+    TextView testText, interval;
+    Boolean keepRunning = true;
+    Runnable timer;
 
 
     @Override
@@ -59,17 +62,22 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         thisAct = this;
         BottomNavigationView navigator = findViewById(R.id.navigation2);
         navigator.setOnNavigationItemSelectedListener(this);
+        rV.myInstance().keepRunning = true;
+        keepRunning = true;
 
         rV.myInstance().currentTemp = 0;
         rV.myInstance().minNum = 0;
         rV.myInstance().maxNum = 0;
-
+        counter = 0;
         configureSave();
         configureCancel();
-
+        interval = findViewById(R.id.interval);
+        INTer = vC.myInstance().timer / 100;
+        String runInter = Integer.toString(INTer);
+        interval.setText(runInter);
         loadFragment(new CurrentRunFragment());
 
-        //configureTimer();
+        configureTimer();
         System.out.println("Timer is running");
 
 
@@ -101,34 +109,55 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         else{
             delay = vC.myInstance().timer;
         }
+        if(adapter != null){
+            if(!adapter.isEnabled()){
+                showWirelessSettings();
+            }
+            if(keepRunning){
+                adapter.enableForegroundDispatch(thisAct, intent, null, null);}
+        }
         System.out.println("Running Timer");
-        Runnable timer = new Runnable() {
+        timer = new Runnable() {
 
             @Override
             public void run() {
-                System.out.println("Running a new temperature");
-                generateRandomNum();
+                //System.out.println("Running a new temperature");
+                //generateRandomNum();
 
-                if(adapter != null){
-                    if(!adapter.isEnabled()){
-                        showWirelessSettings();
-                    }
-                    adapter.enableForegroundDispatch(thisAct, intent, null, null);
-                }
+
 
                 handle.postDelayed(this, delay);
             }
         };
-        handle.postDelayed(timer, delay * 10);
+        timer.run();
+        //handle.postDelayed(timer, delay);
     }
     @Override
     public void onPause(){
         super.onPause();
         if(adapter != null){
-            if(adapter.isEnabled())
+            if(adapter.isEnabled()) {
+                keepRunning = false;
                 adapter.disableForegroundDispatch(thisAct);
+            }
         }
+        rV.myInstance().keepRunning = false;
+        rV.myInstance().runDP.clear();
     }
+    /** This is a green comment **/
+    /**@Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(adapter != null){
+            if(adapter.isEnabled()) {
+                keepRunning = false;
+                adapter.disableForegroundDispatch(thisAct);
+            }
+        }
+
+
+
+    } **/
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -210,13 +239,14 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         }
         return sb.toString();
     }
-    /*
+
     private void configureTimer(){
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 System.out.println("Running a new temperature");
                 generateRandomNum();
+
                 if(!stopTimer){
                     configureTimer();
                 }
@@ -231,7 +261,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         }
         Timer timer = new Timer();
         timer.schedule(task, delay);
-    }*/
+    }
 
     private void generateRandomNum(){
         Random rand = new Random();
@@ -248,16 +278,6 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
             System.out.println(tempList.size());
             enterValue();
         }
-
-        if(adapter != null){
-            if(adapter.isEnabled()){
-
-            }
-            else {
-                adapter.enableForegroundDispatch(this, intent, null, null);
-            }
-        }
-
     }
     private void enterValue(){
         int aveAdd = 0;
@@ -265,13 +285,16 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         for(int i =0; i < 10; i++){
             aveAdd += (int)tempList.get(i);
         }
-        aveAdd /= 10;
+        aveAdd = aveAdd / 10;
 
-        rV.myInstance().runTemps.add(aveAdd);
-        rV.myInstance().currentTemp = aveAdd;
+        rV.myInstance().runTemps.add((int)aveAdd);
+        rV.myInstance().currentTemp = (int)aveAdd;
         //Temp fix, not very efficient(I think)
         //Got to make the graph scrollable
-        rV.myInstance().runDP.add(new DataPoint(counter, aveAdd));
+        if(rV.myInstance().runDP.add(new Entry(counter * INTer, aveAdd)))
+            System.out.println("Run was added");
+        else
+            System.out.println("Run wasnt added");
 
 
 
@@ -307,6 +330,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
                 String formattedDate = newFormat.format(date);
                 if(adapter != null)
                     adapter.disableForegroundDispatch(thisAct);
+
                 /*
                 * This is where I will pull from run variables, and take the saved data from the 2 tabs.
                 * */
@@ -333,16 +357,19 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
                             formattedDate,
                             rV.myInstance().maxNum,
                             rV.myInstance().minNum,
-                            rV.myInstance().runTemps.toString());
+                            rV.myInstance().runTemps.toString(),
+                            vC.myInstance().timer);
                 }
 
                 Toast.makeText(getBaseContext(), "New Temps saved as: " + rV.myInstance().runTemps.toString(), Toast.LENGTH_LONG).show();
                 rV.myInstance().runTemps.clear();
                 stopTimer = true;
+
                 finish();
             }
         });
     }
+
     private void configureCancel(){
         cancelButton = findViewById(R.id.cancelButton);
 
@@ -352,7 +379,9 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
             public void onClick(View view){
                 stopTimer = true;
                 if(adapter != null)
-                    adapter.disableForegroundDispatch(act);
+                {}
+                    //adapter.disableForegroundDispatch(act);
+
                 finish();
             }
         });

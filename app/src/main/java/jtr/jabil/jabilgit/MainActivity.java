@@ -29,9 +29,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         loadFragment(new NewRunFragment(), 0);
 
         RunDatabase rd = new RunDatabase(this);
-        //rd.onUpgrade(rd.getWritableDatabase(), 0, 1);
+        //rd.onUpgrade(rd.getWritableDatabase(), 1, 2);
         System.out.println(vC.myInstance().timer);
-
+        if(vC.myInstance().timer < 100){
+            vC.myInstance().timer =100;
+        }
 
     }
 
