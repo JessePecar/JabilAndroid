@@ -37,7 +37,7 @@ public class CurrentRunGraph extends Fragment {
     RunDatabase rd = new RunDatabase(getActivity());
     View fragmentView;
     Runnable graphTimer;
-    int maxX;
+    int count = 0;
     VariableController vC = new VariableController();
     RunVariables rV = new RunVariables();
     LineGraphSeries<DataPoint> series;
@@ -56,30 +56,61 @@ public class CurrentRunGraph extends Fragment {
         graph = fragmentView.findViewById(R.id.running_graph);
         setupGraph();
 
-        setTimer();
 
+        miniTimer();
         return fragmentView;
     }
-    void setTimer(){
+    void miniTimer(){
         TimerTask timer = new TimerTask() {
             @Override
             public void run() {
+                if (rV.myInstance().keepRunning) {
+                    LineDataSet lds = new LineDataSet(rV.myInstance().runDP, null);
 
-                if(rV.myInstance().keepRunning){
-                    LineDataSet lds = new LineDataSet(rV.myInstance().runDP, rV.myInstance().runName);
+                    lds.setValueTextColor(getResources().getColor(R.color.colorWhite));
+                    lds.setValueTextSize(14);
+                    LineDataSet minilds = new LineDataSet(rV.myInstance().filler, null);
+                    minilds.setColor(getResources().getColor(R.color.colorAccent));
+
                     LineData lineData = new LineData(lds);
+                    lineData.addDataSet(lds);
+                    lineData.addDataSet(minilds);
                     graph.setData(lineData);
-                    graph.invalidate();
-                    setTimer();
-                }
-                else{
+                    graph.notifyDataSetChanged();
 
+                    graph.invalidate();
+                    if(count == 10){
+                        count = 0;
+                        //setTimer();
+                    }
+                    else{
+                        count++;
+                    }
+                    miniTimer();
                 }
             }
         };
-        long delay = vC.myInstance().timer * 10;
+        long delay = vC.myInstance().timer;
         Timer time  = new Timer();
         time.schedule(timer, delay);
+
+    }
+    void setTimer(){
+        if(rV.myInstance().keepRunning){
+            LineDataSet lds = new LineDataSet(rV.myInstance().runDP, rV.myInstance().runName);
+
+            lds.setValueTextColor(getResources().getColor(R.color.colorWhite));
+            lds.setValueTextSize(14);
+            LineData lineData = new LineData(lds);
+            lineData.addDataSet(lds);
+            graph.setData(lineData);
+            graph.notifyDataSetChanged();
+
+            graph.invalidate();
+        }
+        else{
+
+        }
     }
 
 
@@ -89,7 +120,7 @@ public class CurrentRunGraph extends Fragment {
         System.out.println("Setting up the Series");
 
         //I paint it black
-        LineDataSet lds = new LineDataSet(rV.myInstance().runDP, rV.myInstance().runName);
+        LineDataSet lds = new LineDataSet(rV.myInstance().runDP, null);
         lds.setColor(getResources().getColor(R.color.colorAccent2));
         lds.setValueTextColor(getResources().getColor(R.color.colorWhite));
 

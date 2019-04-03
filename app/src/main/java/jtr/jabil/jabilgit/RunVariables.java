@@ -13,6 +13,7 @@ public class RunVariables  extends Application {
     ArrayList runTemps = new ArrayList();
     ArrayList tempList = new ArrayList();
     List<Entry> runDP = new ArrayList<>();
+    List<Entry> filler = new ArrayList<>();
 
     int maxNum;
     int minNum;

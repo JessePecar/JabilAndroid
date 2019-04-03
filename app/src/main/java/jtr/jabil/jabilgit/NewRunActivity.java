@@ -45,6 +45,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     boolean stopTimer = false;
     private final Handler handle = new Handler();
     int counter = 0, INTer;
+    float miniCounter = 0;
     Activity thisAct;
     //Near Field Variables
     private NfcAdapter adapter;
@@ -64,7 +65,8 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         navigator.setOnNavigationItemSelectedListener(this);
         rV.myInstance().keepRunning = true;
         keepRunning = true;
-
+        rV.myInstance().runDP.clear();
+        rV.myInstance().filler.clear();
         rV.myInstance().currentTemp = 0;
         rV.myInstance().minNum = 0;
         rV.myInstance().maxNum = 0;
@@ -266,9 +268,10 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     private void generateRandomNum(){
         Random rand = new Random();
         System.out.println("Generating new Temp");
-
-        tempList.add(rand.nextInt((120 - 32) +1) +32);
-
+        int temp = rand.nextInt((120 - 32) +1) +32;
+        tempList.add(temp);
+        rV.myInstance().filler.add(new Entry(miniCounter, temp));
+        miniCounter += (float)vC.myInstance().timer / 1000;
         //Send to the UI
         if(tempList.size() > 1){
             System.out.println(tempList.size());
