@@ -86,12 +86,12 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         testText = findViewById(R.id.nfcTest);
         adapter = NfcAdapter.getDefaultAdapter(this);
 
-        if(adapter == null){
+        /*if(adapter == null){
             Toast.makeText(this, "NFC is broke", Toast.LENGTH_LONG).show();
             //This will send back to the mainActivity
             finish();
             return;
-        }
+        }*/
 
         intent = PendingIntent.getActivity(
                 this,
@@ -111,26 +111,26 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         else{
             delay = vC.myInstance().timer;
         }
-        /** if(adapter != null){
+        /*if(adapter != null){
             if(!adapter.isEnabled()){
                 showWirelessSettings();
             }
             if(keepRunning){
                 adapter.enableForegroundDispatch(thisAct, intent, null, null);}
-        } **/
+        } */
         System.out.println("Running Timer");
-        
+
         //handle.postDelayed(timer, delay);
     }
     @Override
     public void onPause(){
         super.onPause();
-        /**if(adapter != null){
+        /*if(adapter != null){
             if(adapter.isEnabled()) {
                 keepRunning = false;
                 adapter.disableForegroundDispatch(thisAct);
             }
-        }**/
+        }*/
         rV.myInstance().keepRunning = false;
         rV.myInstance().runDP.clear();
     }
