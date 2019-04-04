@@ -19,6 +19,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -93,7 +96,10 @@ public class GraphFragment extends Fragment {
         LineDataSet lds = new LineDataSet(newPoints, tempName);
         lds.setColor(getResources().getColor(R.color.colorAccent2));
         lds.setValueTextColor(getResources().getColor(R.color.colorWhite));
+        lds.setValueTextSize(14);
 
+        lds.setFillColor(getResources().getColor(R.color.colorAccent));
+        lds.setDrawFilled(true);
         LineData lineData = new LineData(lds);
 
         Description desc = graph.getDescription();
