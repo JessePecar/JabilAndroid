@@ -111,38 +111,26 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         else{
             delay = vC.myInstance().timer;
         }
-        if(adapter != null){
+        /** if(adapter != null){
             if(!adapter.isEnabled()){
                 showWirelessSettings();
             }
             if(keepRunning){
                 adapter.enableForegroundDispatch(thisAct, intent, null, null);}
-        }
+        } **/
         System.out.println("Running Timer");
-        timer = new Runnable() {
-
-            @Override
-            public void run() {
-                //System.out.println("Running a new temperature");
-                //generateRandomNum();
-
-
-
-                handle.postDelayed(this, delay);
-            }
-        };
-        timer.run();
+        
         //handle.postDelayed(timer, delay);
     }
     @Override
     public void onPause(){
         super.onPause();
-        if(adapter != null){
+        /**if(adapter != null){
             if(adapter.isEnabled()) {
                 keepRunning = false;
                 adapter.disableForegroundDispatch(thisAct);
             }
-        }
+        }**/
         rV.myInstance().keepRunning = false;
         rV.myInstance().runDP.clear();
     }
