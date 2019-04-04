@@ -89,7 +89,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
 
         testText = findViewById(R.id.nfcTest);
         adapter = NfcAdapter.getDefaultAdapter(this);
-
+/**
         if(adapter == null){
             Toast.makeText(this, "NFC is broke", Toast.LENGTH_LONG).show();
             //This will send back to the mainActivity
@@ -102,7 +102,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
                 1,
                 new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
                 0);
-
+ **/
     }
     @Override
     public void onResume() {
@@ -115,6 +115,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         else{
             delay = vC.myInstance().timer;
         }
+        /**
         if(adapter != null){
             if(!adapter.isEnabled()){
                 showWirelessSettings();
@@ -122,6 +123,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
             if(keepRunning){
                 adapter.enableForegroundDispatch(thisAct, intent, null, null);}
         }
+         **/
         System.out.println("Running Timer");
 
         //handle.postDelayed(timer, delay);
@@ -129,12 +131,14 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     @Override
     public void onPause(){
         super.onPause();
+        /**
         if(adapter != null){
             if(adapter.isEnabled()) {
                 keepRunning = false;
                 adapter.disableForegroundDispatch(thisAct);
             }
         }
+         **/
         rV.myInstance().keepRunning = false;
         rV.myInstance().runDP.clear();
     }
@@ -151,7 +155,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
 
 
 
-    } **/
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -233,7 +237,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         }
         return sb.toString();
     }
-
+     **/
     private void configureTimer(){
         TimerTask task = new TimerTask() {
             @Override
@@ -335,9 +339,10 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
                 fullDate = "dd/MM/yy";
                 DateFormat newFormat = new SimpleDateFormat(fullDate);
                 String formattedDate = newFormat.format(date);
+                /**
                 if(adapter != null)
                     adapter.disableForegroundDispatch(thisAct);
-
+                **/
                 /*
                 * This is where I will pull from run variables, and take the saved data from the 2 tabs.
                 * */
@@ -385,10 +390,10 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
             @Override
             public void onClick(View view){
                 stopTimer = true;
-                if(adapter != null)
+                /**if(adapter != null)
                 {}
                     //adapter.disableForegroundDispatch(act);
-
+                **/
                 finish();
             }
         });
