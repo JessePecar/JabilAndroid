@@ -124,7 +124,7 @@ public class GraphFragment extends Fragment {
 
         graph.getAxisLeft().mAxisMinimum = 20;
         graph.getAxisRight().mAxisMaximum = 140;
-        graph.animateX(200);
+        graph.animateX(500);
 
         Legend leg = graph.getLegend();
         leg.setTextColor(Color.WHITE);

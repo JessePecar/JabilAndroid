@@ -53,6 +53,7 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     TextView testText, interval;
     Boolean keepRunning = true;
     Runnable timer;
+    int fillMin, fillMax;
 
 
     @Override
@@ -66,7 +67,10 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         rV.myInstance().keepRunning = true;
         keepRunning = true;
         rV.myInstance().runDP.clear();
-        rV.myInstance().filler.clear();
+        rV.myInstance().fillerMax.clear();
+        rV.myInstance().fillerMin.clear();
+        fillMin = 120;
+        fillMax = 0;
         rV.myInstance().currentTemp = 0;
         rV.myInstance().minNum = 0;
         rV.myInstance().maxNum = 0;
@@ -86,12 +90,12 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         testText = findViewById(R.id.nfcTest);
         adapter = NfcAdapter.getDefaultAdapter(this);
 
-        /*if(adapter == null){
+        if(adapter == null){
             Toast.makeText(this, "NFC is broke", Toast.LENGTH_LONG).show();
             //This will send back to the mainActivity
             finish();
             return;
-        }*/
+        }
 
         intent = PendingIntent.getActivity(
                 this,
@@ -111,13 +115,13 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
         else{
             delay = vC.myInstance().timer;
         }
-        /*if(adapter != null){
+        if(adapter != null){
             if(!adapter.isEnabled()){
                 showWirelessSettings();
             }
             if(keepRunning){
                 adapter.enableForegroundDispatch(thisAct, intent, null, null);}
-        } */
+        }
         System.out.println("Running Timer");
 
         //handle.postDelayed(timer, delay);
@@ -125,12 +129,12 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     @Override
     public void onPause(){
         super.onPause();
-        /*if(adapter != null){
+        if(adapter != null){
             if(adapter.isEnabled()) {
                 keepRunning = false;
                 adapter.disableForegroundDispatch(thisAct);
             }
-        }*/
+        }
         rV.myInstance().keepRunning = false;
         rV.myInstance().runDP.clear();
     }
@@ -256,10 +260,9 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
     private void generateRandomNum(){
         Random rand = new Random();
         System.out.println("Generating new Temp");
+
         int temp = rand.nextInt((120 - 32) +1) +32;
         tempList.add(temp);
-        rV.myInstance().filler.add(new Entry(miniCounter, temp));
-        miniCounter += (float)vC.myInstance().timer / 1000;
         //Send to the UI
         if(tempList.size() > 1){
             System.out.println(tempList.size());
@@ -275,8 +278,21 @@ public class NewRunActivity extends AppCompatActivity implements BottomNavigatio
 
         for(int i =0; i < 10; i++){
             aveAdd += (int)tempList.get(i);
+            if((int)tempList.get(i) > fillMax){
+                fillMax = (int)tempList.get(i);
+                if(fillMin == 120){
+                    fillMin = fillMax;
+                }
+            }
+            else if((int)tempList.get(i) < fillMin){
+                fillMin = (int)tempList.get(i);
+            }
         }
         aveAdd = aveAdd / 10;
+        rV.myInstance().fillerMax.add(new Entry(counter * INTer, fillMax));
+        rV.myInstance().fillerMin.add(new Entry(counter * INTer, fillMin));
+        fillMin = 120;
+        fillMax = 0;
 
         rV.myInstance().runTemps.add((int)aveAdd);
         rV.myInstance().currentTemp = (int)aveAdd;
