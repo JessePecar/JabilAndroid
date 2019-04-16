@@ -99,7 +99,8 @@
 
             android:text="@string/runDate"
             android:textColor="@color/colorAccent"
-            android:textSize="30dp"
+            android:textSize="20sp"
+
 
             app:layout_constraintBottom_toBottomOf="@id/runName"
             app:layout_constraintDimensionRatio="H,3:1"

@@ -68,7 +68,8 @@ public class GraphFragment extends Fragment {
             newData = new int[temp.length];
 
             for(int i = 0; i < temp.length; i++){
-                newData[i] = Integer.parseInt(temp[i]);
+
+                newData[i] = (int)Float.parseFloat(temp[i]);
                 newPoints.add(new Entry(i * vC.myInstance().displayedTimer, newData[i]));
             }
         }
@@ -126,7 +127,7 @@ public class GraphFragment extends Fragment {
         paint.setColor(Color.parseColor("#66B5DD"));
         paint.setStrokeWidth(14);
         graph.setPaint(paint, 0);
-        graph.setBackgroundColor(Color.parseColor("#444444"));
+        graph.setBackground(getResources().getDrawable(R.drawable.gradient_3));
 
         graph.getAxisLeft().mAxisMinimum = 20;
         graph.getAxisRight().mAxisMaximum = 140;

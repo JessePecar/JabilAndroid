@@ -55,7 +55,7 @@ public class RunCardAdapter extends RecyclerView.Adapter<RunCardAdapter.RunCardV
 
         final RunCard runs = runList.get(position);
         holder.runName.setText(String.valueOf(runs.getName()));
-        holder.runLength.setText("Length: " + String.valueOf(runs.getRunLength()) + " Seconds");
+        holder.runLength.setText("Length: " + String.valueOf(runs.getRunLength()) + " Minutes");
         holder.runDate.setText(String.valueOf(runs.getDate()));
         holder.maxTemp.setText(String.valueOf("Max Temp: " +runs.getMaxTemp()));
         holder.minTemp.setText(String.valueOf("Min Temp: " + runs.getMinTemp()));

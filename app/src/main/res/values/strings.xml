@@ -22,4 +22,5 @@
     <string name="minTempText">Min Temp:</string>
     <string name="maxTempNum">Max Temp:</string>
     <string name="currentRun">Current Run</string>
+    <string name="title_activity_reader">ReaderActivity</string>
 </resources>

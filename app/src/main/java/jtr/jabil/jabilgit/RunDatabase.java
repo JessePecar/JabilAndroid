@@ -26,6 +26,7 @@ public class RunDatabase extends SQLiteOpenHelper {
     public static final String COL_6 = "minTemp";
     public static final String COL_7 = "runData";
     public static final String COL_8 = "runInterval";
+    public static final String COL_9 = "tempUnit";
 
     public RunDatabase(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -35,7 +36,7 @@ public class RunDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + RUN_TABLE +
-                " (runID INTEGER PRIMARY KEY AUTOINCREMENT, runName TEXT,  runLength INT, runDate TEXT, maxTemp INT, minTemp INT, runData TEXT, runInterval INT)");
+                " (runID INTEGER PRIMARY KEY AUTOINCREMENT, runName TEXT,  runLength INT, runDate TEXT, maxTemp INT, minTemp INT, runData TEXT, runInterval INT, tempUnit TEXT)");
     }
     /** Only call this if you want to delete everything in the database and start over. **/
     @Override
@@ -44,7 +45,7 @@ public class RunDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addRun(String runName, int runLength, String runDate, int maxTemp, int minTemp, String runData, int runInterval){
+    public boolean addRun(String runName, int runLength, String runDate, int maxTemp, int minTemp, String runData, int runInterval, String tempUnit){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COL_2, runName);
@@ -54,6 +55,7 @@ public class RunDatabase extends SQLiteOpenHelper {
         cv.put(COL_6, minTemp);
         cv.put(COL_7, runData);
         cv.put(COL_8, runInterval);
+        cv.put(COL_9, tempUnit);
 
         long result = db.insert(RUN_TABLE, null, cv);
 

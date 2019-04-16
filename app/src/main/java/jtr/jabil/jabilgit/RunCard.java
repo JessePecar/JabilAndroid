@@ -24,14 +24,14 @@ public class RunCard {
     }
     public String getDate() { return runDate; }
     public String getData() { return runData; }
-    public int getRunTimer(){ return runInterval / 100;}
+    public int getRunTimer(){ return runInterval;}
     public int getMaxTemp(){
         return maxTemp;
     }
     public int getMinTemp(){
         return minTemp;
     }
-    public int getRunLength() { return runLength * (runInterval / 100); }
+    public int getRunLength() { return (runLength * (runInterval)); }
 
     public int getRunID(){ return runID; }
 }

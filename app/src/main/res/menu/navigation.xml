@@ -17,9 +17,4 @@
         android:icon="@drawable/ic_timeline"
         android:title="@string/see_graph" />
 
-    <item
-        android:id="@+id/navigator_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings" />
-
 </menu>
