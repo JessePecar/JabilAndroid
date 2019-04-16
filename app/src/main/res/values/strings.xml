@@ -11,6 +11,7 @@
     <color name="colorNavBar">#323232</color>
     <color name="colorFragment">#222222</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="noColor">#00FFFFFF</color>
 
     <string name="minTemp">Minimum Temp</string>
     <string name="maxTemp">Maximum Temp</string>
@@ -20,4 +21,6 @@
     <string name="currentTemp">Temp:</string>
     <string name="minTempText">Min Temp:</string>
     <string name="maxTempNum">Max Temp:</string>
+    <string name="currentRun">Current Run</string>
+    <string name="title_activity_reader">ReaderActivity</string>
 </resources>

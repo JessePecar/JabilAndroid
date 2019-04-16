@@ -9,6 +9,8 @@
     android:background="@color/colorAsh"
     tools:context=".MainActivity">
 
+
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="0dp"

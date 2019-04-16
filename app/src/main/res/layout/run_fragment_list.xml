@@ -5,65 +5,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAsh">
-
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="231dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorFragment"
-        android:text="@string/startRun"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@id/leftGuide"
-        app:layout_constraintRight_toLeftOf="@id/rightGuide"
-        app:layout_constraintWidth_percent="0.6"
-        app:layout_constraintBottom_toTopOf="@id/bottomGuide"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
-         />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/MiddleGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05">
-
-    </android.support.constraint.Guideline>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/bottomGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55"/>
+    android:background="@drawable/gradient_2">
 
     <android.support.constraint.Guideline
         android:id="@+id/leftGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2"/>
+        app:layout_constraintGuide_percent="0.1"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/rightGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8"/>
+        app:layout_constraintGuide_percent="0.9" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/innerleftGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.44"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/innerrightGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.56" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/topGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="231dp"
-        android:layout_height="207dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:contentDescription="TODO"
         app:layout_constraintLeft_toRightOf="@id/leftGuide"
         app:layout_constraintRight_toLeftOf="@id/rightGuide"
-        app:layout_constraintTop_toBottomOf="@id/MiddleGuideline"
-        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintBottom_toTopOf="@id/topGuide"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/jabil_logo" />
+
+    <ImageView
+        android:id="@+id/polyImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="TODO"
+        app:layout_constraintLeft_toRightOf="@id/leftGuide"
+        app:layout_constraintRight_toLeftOf="@id/rightGuide"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bottomGuide"
+        app:srcCompat="@drawable/poly_logo" />
+
+    <Button
+        android:id="@+id/sendFile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_3"
+        android:text="Set NFC"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/polyImage"
+        app:layout_constraintLeft_toRightOf="@id/leftGuide"
+        app:layout_constraintRight_toLeftOf="@id/rightGuide" />
 
 
 

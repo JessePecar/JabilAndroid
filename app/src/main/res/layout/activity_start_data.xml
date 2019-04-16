@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartData"
+    android:background="@drawable/gradient_2">
+
+
+    <Switch
+        android:id="@+id/tempSwitch"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:checked="false"
+        android:text=""
+        android:textOff="Celcius"
+        android:textOn="Fahrenheit"
+        android:thumbTint="@color/colorAccent"
+        android:trackTint="@color/colorWhite"
+        android:foregroundTint="@color/colorAccent2"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@id/innerrightGuide"
+        app:layout_constraintStart_toEndOf="@id/innerleftGuide"
+        app:layout_constraintTop_toBottomOf="@id/TempMeasure" />
+
+    <SeekBar
+        android:id="@+id/timeSeek"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:max="60"
+        android:min="1"
+        android:progressBackgroundTint="@color/colorWhite"
+        android:progressTint="@color/colorAccent2"
+
+        android:thumb="@android:drawable/ic_menu_recent_history"
+        android:thumbTint="@color/colorAccent"
+        app:layout_constraintEnd_toStartOf="@id/rightGuide"
+        app:layout_constraintStart_toEndOf="@id/leftGuide"
+        app:layout_constraintTop_toBottomOf="@id/TimeSelect" />
+
+    <TextView
+        android:id="@+id/TempMeasure"
+        android:layout_width="328dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:text="Temperature Unit"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/rightGuide"
+        app:layout_constraintStart_toEndOf="@id/leftGuide"
+        app:layout_constraintTop_toBottomOf="@id/setDate" />
+
+    <TextView
+        android:id="@+id/TimeSelect"
+        android:layout_width="328dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="20dp"
+        android:text="Polling Interval (Minutes)"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/rightGuide"
+        app:layout_constraintStart_toEndOf="@id/leftGuide"
+        app:layout_constraintTop_toBottomOf="@id/tempSwitch" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/leftGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/rightGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/innerleftGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.44"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/innerrightGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.56" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/topGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/secondGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <TextView
+        android:id="@+id/Fahrenheit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Fahrenheit"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tempSwitch"
+        app:layout_constraintTop_toBottomOf="@id/TempMeasure" />
+
+    <TextView
+        android:id="@+id/Celcius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="10sp"
+        android:text="Celcius"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tempSwitch"
+        app:layout_constraintTop_toBottomOf="@id/TempMeasure" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="1"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/innerrightGuide"
+        app:layout_constraintStart_toEndOf="@id/innerleftGuide"
+        app:layout_constraintTop_toBottomOf="@id/timeSeek" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="TODO"
+        app:layout_constraintLeft_toRightOf="@id/leftGuide"
+        app:layout_constraintRight_toLeftOf="@id/rightGuide"
+        app:layout_constraintBottom_toTopOf="@id/topGuide"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/jabil_logo" />
+
+
+    <ImageView
+        android:id="@+id/polyImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="TODO"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/leftGuide"
+        app:layout_constraintRight_toLeftOf="@id/rightGuide"
+        app:layout_constraintTop_toBottomOf="@id/bottomGuide"
+        app:srcCompat="@drawable/poly_logo" />
+
+    <Button
+        android:id="@+id/sendFile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_3"
+        android:text="Start Recording"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/clearData"
+        app:layout_constraintLeft_toRightOf="@id/leftGuide"
+        app:layout_constraintRight_toLeftOf="@id/rightGuide"
+        app:layout_constraintTop_toBottomOf="@id/timeText" />
+
+    <Button
+        android:id="@+id/setTime"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/gradient_3"
+        android:text="Set Time"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/secondGuide"
+        app:layout_constraintLeft_toRightOf="@id/setDate"
+        app:layout_constraintRight_toLeftOf="@id/rightGuide"
+        app:layout_constraintTop_toBottomOf="@id/topGuide" />
+
+    <Button
+        android:id="@+id/setDate"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/gradient_3"
+        android:text="Set Date"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/secondGuide"
+        app:layout_constraintLeft_toRightOf="@id/leftGuide"
+        app:layout_constraintRight_toLeftOf="@id/setTime"
+        app:layout_constraintTop_toBottomOf="@id/topGuide" />
+
+    <Button
+        android:id="@+id/clearData"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/gradient_3"
+        android:text="Clear Data"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/polyImage"
+        app:layout_constraintLeft_toRightOf="@id/leftGuide"
+        app:layout_constraintRight_toLeftOf="@id/rightGuide"
+        app:layout_constraintTop_toBottomOf="@id/sendFile" />
+
+</android.support.constraint.ConstraintLayout>

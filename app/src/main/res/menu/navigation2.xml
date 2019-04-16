@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorAsh">
+
+    <item
+        android:id="@+id/navigator_current_new_run"
+        android:icon="@drawable/ic_add"
+        android:title="@string/currentRun" />
+
+    <item
+        android:id="@+id/navigator_current_graphed_run"
+        android:icon="@drawable/ic_timeline"
+        android:title="@string/see_graph" />
+
+
+
+</menu>
